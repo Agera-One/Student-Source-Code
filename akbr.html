@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Login & Register</title>
+<style>
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #cb1111 0%, #ea25fc 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 350px;
+    max-height: 600px;
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+    user-select: none;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  label {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: #555;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+    font-size: 1rem;
+    outline-offset: 2px;
+  }
+
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    border-color: #2575fc;
+    outline: none;
+  }
+
+  button {
+    background-color: #2575fc;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+  }
+
+  button:hover {
+    background-color: #1a56d6;
+  }
+
+  .toggle-link {
+    margin-top: 1rem;
+    color: #4c25fc;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    user-select: none;
+    text-decoration: underline;
+  }
+
+  .toggle-link:hover {
+    color: #431ad6;
+  }
+
+  /* Hidden forms by default */
+  .hidden {
+    display: none;
+  }
+
+  /* Responsive adjustments */
+  @media (max-height: 600px) {
+    .container {
+      max-height: 100vh;
+      margin: 1rem;
+      padding: 1.5rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="form-title">Login</h2>
+    <form id="login-form">
+      <label for="login-email">Email</label>
+      <input type="email" id="login-email" name="login-email" placeholder="you@example.com" required autocomplete="email" />
+      <label for="login-password">Password</label>
+      <input type="password" id="login-password" name="login-password" placeholder="Enter your password" required autocomplete="current-password" />
+      <button type="submit">Login</button>
+      <div class="toggle-link" id="show-register">Don't have an account? Register</div>
+    </form>
+    <form id="register-form" class="hidden" autocomplete="off">
+      <label for="register-name">Full Name</label>
+      <input type="text" id="register-name" name="register-name" placeholder="Your full name" required autocomplete="name" />
+      <label for="register-email">Email</label>
+      <input type="email" id="register-email" name="register-email" placeholder="you@example.com" required autocomplete="email" />
+      <label for="register-password">Password</label>
+      <input type="password" id="register-password" name="register-password" placeholder="Create a password" required autocomplete="new-password" />
+      <label for="register-confirm-password">Confirm Password</label>
+      <input type="password" id="register-confirm-password" name="register-confirm-password" placeholder="Confirm your password" required autocomplete="new-password" />
+      <button type="submit">Register</button>
+      <div class="toggle-link" id="show-login">Already have an account? Login</div>
+    </form>
+  </div>
+
+<script>
+  // Toggle between login and register forms
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  const formTitle = document.getElementById('form-title');
+  const showRegisterLink = document.getElementById('show-register');
+  const showLoginLink = document.getElementById('show-login');
+
+  showRegisterLink.addEventListener('click', () => {
+    loginForm.classList.add('hidden');
+    registerForm.classList.remove('hidden');
+    formTitle.textContent = 'Register';
+  });
+
+  showLoginLink.addEventListener('click', () => {
+    registerForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+    formTitle.textContent = 'Login';
+  });
+
+  // Basic client-side validation for register passwords match
+  registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const password = document.getElementById('register-password').value;
+    const confirmPassword = document.getElementById('register-confirm-password').value;
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      return;
+    }
+    alert('Registration successful! (Demo)');
+    registerForm.reset();
+    registerForm.classList.add('hidden');
+    loginForm.classList.remove('hidden');
+    formTitle.textContent = 'Login';
+  });
+
+  // Demo login form submit handler
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Login successful! (Demo)');
+    loginForm.reset();
+  });
+</script>
+</body>
+</html>
