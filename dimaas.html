@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Login & Register</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+    body, html {
+      margin: 0; padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      user-select: none;
+    }
+    .container {
+      background: rgba(255 255 255 / 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      width: 400px;
+      max-width: 100%;
+      padding: 2rem 2rem 3rem;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      font-size: 2rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    nav button {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      user-select: none;
+    }
+    nav button.active,
+    nav button:hover {
+      background: #ff6b6b;
+      color: white;
+      box-shadow: 0 6px 15px rgba(255, 107, 107, 0.6);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    label {
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.2rem;
+      user-select: text;
+      display: block;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      padding: 0.8rem 1rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+      transition: box-shadow 0.3s ease;
+      width: 100%;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      box-shadow: 0 0 10px #ff6b6b;
+    }
+
+    button[type="submit"] {
+      background: #ff6b6b;
+      border: none;
+      padding: 0.9rem 1rem;
+      font-weight: 600;
+      color: white;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(255, 107, 107, 0.6);
+      transition: background 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      margin-top: 0.5rem;
+    }
+    button[type="submit"]:hover,
+    button[type="submit"]:focus {
+      background: #ff4757;
+      outline: none;
+      transform: scale(1.05);
+    }
+    button[type="submit"]:active {
+      transform: scale(0.95);
+    }
+
+    .error-message {
+      color: #ff6b6b;
+      font-size: 0.85rem;
+      min-height: 1.2em;
+      text-align: left;
+      margin-top: -0.6rem;
+    }
+
+    /* Hide by default, show active form */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 450px) {
+      .container {
+        width: 100%;
+        padding: 1.5rem 1rem 2rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      nav button {
+        font-size: 1rem;
+        padding: 0.4rem 0.8rem;
+      }
+      button[type="submit"] {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-label="Login and Register forms">
+    <h1 id="formTitle">Login</h1>
+    <nav role="tablist" aria-label="Toggle between login and registration forms">
+      <button id="loginTab" role="tab" aria-selected="true" aria-controls="loginPanel" tabindex="0" class="active">Login</button>
+      <button id="registerTab" role="tab" aria-selected="false" aria-controls="registerPanel" tabindex="-1">Register</button>
+    </nav>
+
+    <section id="loginPanel" class="tab-content active" role="tabpanel" aria-labelledby="loginTab">
+      <form id="loginForm" novalidate aria-describedby="loginForm-error" aria-live="polite">
+        <div>
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" name="loginEmail" placeholder="you@example.com" autocomplete="email" required aria-required="true" aria-describedby="loginEmail-error" />
+          <div id="loginEmail-error" class="error-message" aria-live="assertive"></div>
+        </div>
+
+        <div>
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" name="loginPassword" placeholder="Enter your password" autocomplete="current-password" required aria-required="true" aria-describedby="loginPassword-error" />
+          <div id="loginPassword-error" class="error-message" aria-live="assertive"></div>
+        </div>
+
+        <button type="submit" aria-label="Submit login form">Log In</button>
+        <div id="loginForm-error" class="error-message" role="alert"></div>
+      </form>
+    </section>
+
+    <section id="registerPanel" class="tab-content" role="tabpanel" aria-labelledby="registerTab" tabindex="0">
+      <form id="registerForm" novalidate aria-describedby="registerForm-error" aria-live="polite">
+        <div>
+          <label for="registerName">Full Name</label>
+          <input type="text" id="registerName" name="registerName" placeholder="Your full name" autocomplete="name" required aria-required="true" aria-describedby="registerName-error" />
+          <div id="registerName-error" class="error-message" aria-live="assertive"></div>
+        </div>
+        <div>
+          <label for="registerEmail">Email Address</label>
+          <input type="email" id="registerEmail" name="registerEmail" placeholder="you@example.com" autocomplete="email" required aria-required="true" aria-describedby="registerEmail-error" />
+          <div id="registerEmail-error" class="error-message" aria-live="assertive"></div>
+        </div>
+
+        <div>
+          <label for="registerPassword">Password</label>
+          <input type="password" id="registerPassword" name="registerPassword" placeholder="Create a password" autocomplete="new-password" required aria-required="true" aria-describedby="registerPassword-error" />
+          <div id="registerPassword-error" class="error-message" aria-live="assertive"></div>
+        </div>
+
+        <button type="submit" aria-label="Submit registration form">Register</button>
+        <div id="registerForm-error" class="error-message" role="alert"></div>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      // Tab switching
+      const loginTab = document.getElementById('loginTab');
+      const registerTab = document.getElementById('registerTab');
+      const loginPanel = document.getElementById('loginPanel');
+      const registerPanel = document.getElementById('registerPanel');
+      const formTitle = document.getElementById('formTitle');
+
+      function activateLoginTab() {
+        loginTab.classList.add('active');
+        loginTab.setAttribute('aria-selected', 'true');
+        loginTab.setAttribute('tabindex', '0');
+
+        registerTab.classList.remove('active');
+        registerTab.setAttribute('aria-selected', 'false');
+        registerTab.setAttribute('tabindex', '-1');
+
+        loginPanel.classList.add('active');
+        loginPanel.setAttribute('tabindex', '0');
+        registerPanel.classList.remove('active');
+        registerPanel.setAttribute('tabindex', '-1');
+
+        formTitle.textContent = 'Login';
+      }
+
+      function activateRegisterTab() {
+        registerTab.classList.add('active');
+        registerTab.setAttribute('aria-selected', 'true');
+        registerTab.setAttribute('tabindex', '0');
+
+        loginTab.classList.remove('active');
+        loginTab.setAttribute('aria-selected', 'false');
+        loginTab.setAttribute('tabindex', '-1');
+
+        registerPanel.classList.add('active');
+        registerPanel.setAttribute('tabindex', '0');
+        loginPanel.classList.remove('active');
+        loginPanel.setAttribute('tabindex', '-1');
+
+        formTitle.textContent = 'Register';
+      }
+
+      loginTab.addEventListener('click', activateLoginTab);
+      registerTab.addEventListener('click', activateRegisterTab);
+
+      loginTab.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          registerTab.focus();
+          activateRegisterTab();
+        }
+      });
+
+      registerTab.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          loginTab.focus();
+          activateLoginTab();
+        }
+      });
+
+      // Validation helpers
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+      function validateNotEmpty(value) {
+        return value.trim().length > 0;
+      }
+
+      // Login form validation
+      const loginForm = document.getElementById('loginForm');
+      const loginEmail = document.getElementById('loginEmail');
+      const loginPassword = document.getElementById('loginPassword');
+      const loginEmailError = document.getElementById('loginEmail-error');
+      const loginPasswordError = document.getElementById('loginPassword-error');
+      const loginFormError = document.getElementById('loginForm-error');
+
+      loginForm.addEventListener('submit', e => {
+        e.preventDefault();
+        loginEmailError.textContent = '';
+        loginPasswordError.textContent = '';
+        loginFormError.textContent = '';
+        let valid = true;
+
+        if (!validateNotEmpty(loginEmail.value)) {
+          loginEmailError.textContent = 'Email is required.';
+          valid = false;
+          loginEmail.focus();
+        } else if (!validateEmail(loginEmail.value)) {
+          loginEmailError.textContent = 'Enter a valid email.';
+          valid = false;
+          loginEmail.focus();
+        }
+
+        if (!validateNotEmpty(loginPassword.value)) {
+          loginPasswordError.textContent = 'Password is required.';
+          if (valid) loginPassword.focus();
+          valid = false;
+        }
+
+        if (valid) {
+          alert('Login successful!\nEmail: ' + loginEmail.value);
+          loginForm.reset();
+        } else {
+          loginFormError.textContent = 'Please fix errors above.';
+        }
+      });
+
+      // Register form validation
+      const registerForm = document.getElementById('registerForm');
+      const registerName = document.getElementById('registerName');
+      const registerEmail = document.getElementById('registerEmail');
+      const registerPassword = document.getElementById('registerPassword');
+      const registerNameError = document.getElementById('registerName-error');
+      const registerEmailError = document.getElementById('registerEmail-error');
+      const registerPasswordError = document.getElementById('registerPassword-error');
+      const registerFormError = document.getElementById('registerForm-error');
+
+      registerForm.addEventListener('submit', e => {
+        e.preventDefault();
+        registerNameError.textContent = '';
+        registerEmailError.textContent = '';
+        registerPasswordError.textContent = '';
+        registerFormError.textContent = '';
+        let valid = true;
+
+        if (!validateNotEmpty(registerName.value)) {
+          registerNameError.textContent = 'Name is required.';
+          valid = false;
+          registerName.focus();
+        }
+
+        if (!validateNotEmpty(registerEmail.value)) {
+          registerEmailError.textContent = 'Email is required.';
+          valid = false;
+          if (valid) registerEmail.focus();
+        } else if (!validateEmail(registerEmail.value)) {
+          registerEmailError.textContent = 'Enter a valid email.';
+          valid = false;
+          if (valid) registerEmail.focus();
+        }
+
+        if (!validateNotEmpty(registerPassword.value)) {
+          registerPasswordError.textContent = 'Password is required.';
+          if (valid) registerPassword.focus();
+          valid = false;
+        } else if (registerPassword.value.length < 6) {
+          registerPasswordError.textContent = 'Password must be at least 6 characters.';
+          if (valid) registerPassword.focus();
+          valid = false;
+        }
+
+        if (valid) {
+          alert('Registration successful!\nName: ' + registerName.value);
+          registerForm.reset();
+        } else {
+          registerFormError.textContent = 'Please fix errors above.';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+
+```
